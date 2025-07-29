@@ -54,26 +54,35 @@ const ModalRenderer: React.FC<{
     
     return (
         <AnimatePresence>
-            {modal.type === 'bookDetail' && (
-                <BookDetailModal
-                    book={modal.props.book}
-                    onClose={closeModal}
-                    onDelete={onDeleteBook}
-                />
-            )}
-            {modal.type === 'archive' && (
-                <Suspense fallback={<div className="fixed inset-0 bg-void/50 z-50" />}>
-                    <ArchiveModal
-                        onClose={closeModal}
-                        onArchive={onArchiveBook}
-                    />
-                </Suspense>
-            )}
-            {modal.type === 'readingView' && (
-                <Suspense fallback={<div className="fixed inset-0 bg-void/50 z-50" />}>
-                    <ReadingView book={modal.props.book} onClose={closeModal} />
-                </Suspense>
-            )}
+            {(() => {
+                switch (modal.type) {
+                    case 'bookDetail':
+                        return (
+                            <BookDetailModal
+                                book={modal.props.book}
+                                onClose={closeModal}
+                                onDelete={onDeleteBook}
+                            />
+                        );
+                    case 'archive':
+                        return (
+                            <Suspense fallback={<div className="fixed inset-0 bg-void/50 z-50" />}>
+                                <ArchiveModal
+                                    onClose={closeModal}
+                                    onArchive={onArchiveBook}
+                                />
+                            </Suspense>
+                        );
+                    case 'readingView':
+                        return (
+                            <Suspense fallback={<div className="fixed inset-0 bg-void/50 z-50" />}>
+                                <ReadingView book={modal.props.book} onClose={closeModal} />
+                            </Suspense>
+                        );
+                    default:
+                        return null;
+                }
+            })()}
         </AnimatePresence>
     );
 };
@@ -85,7 +94,7 @@ const AppContent: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isAiConfigured, setIsAiConfigured] = useState(true);
+    const [isAiConfigured, setIsAiConfigured] = useState(false);
     const [toast, setToast] = useState<ToastState>(null);
 
     const { modal, openModal, closeModal } = useModal();
@@ -97,7 +106,15 @@ const AppContent: React.FC = () => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                setIsAiConfigured(!!process.env.API_KEY);
+                // Check if the AI is configured by calling our serverless function
+                fetch('/.netlify/functions/check-config')
+                    .then(res => res.json())
+                    .then(data => setIsAiConfigured(data.isConfigured))
+                    .catch(err => {
+                        console.error("Failed to check AI configuration:", err);
+                        setIsAiConfigured(false); // Assume not configured on error
+                    });
+                    
                 const userBooks = await getAllBooks();
                 setBooks([...initialBooks, ...userBooks]);
             } catch (error) {

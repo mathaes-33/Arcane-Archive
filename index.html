@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23eab308'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243l-4.243-4.243' /%3E%3C/svg%3E">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0c0a09">
+    <title>Arcane Archives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'serif': ['"Cinzel"', 'serif'],
+              'sans': ['"Cormorant Garamond"', 'sans-serif'],
+            },
+            colors: {
+              'void': '#0c0a09',
+              'gold': {
+                '100': '#fefce8',
+                '200': '#fef9c3',
+                '300': '#fef08a',
+                '400': '#fde047',
+                '500': '#eab308',
+                '600': '#ca8a04',
+                '700': '#a16207',
+                '800': '#854d0e',
+                '900': '#713f12',
+              },
+            },
+            animation: {
+              'aurora': 'aurora 60s linear infinite',
+              'spin': 'spin 1s linear infinite',
+            },
+            keyframes: {
+              aurora: {
+                'from': { backgroundPosition: '0% 50%' },
+                'to': { backgroundPosition: '200% 50%' },
+              },
+              spin: {
+                'from': { transform: 'rotate(0deg)' },
+                'to': { transform: 'rotate(360deg)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      /* For custom scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: #1a1625;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #a16207;
+        border-radius: 4px;
+        border: 2px solid #1a1625;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #eab308;
+      }
+      /* Finer-grained scrollbar for internal elements */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background-color: rgba(12,10,9,0.5); /* void with transparency */
+        border-radius: 3px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #854d0e; /* gold-800 */
+        border-radius: 3px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #a16207; /* gold-700 */
+      }
+      /* Prevents flash of unstyled content before loader */
+      .no-flash {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .loaded {
+        opacity: 1;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "framer-motion": "https://esm.sh/framer-motion@^11.2.12",
+    "pdfjs-dist": "https://esm.sh/pdfjs-dist@4.4.168",
+    "@google/genai": "https://esm.sh/@google/genai@^1.10.0",
+    "fuse.js": "https://esm.sh/fuse.js@^7.0.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-void font-sans text-stone-300 no-flash h-full">
+    <div id="root" class="h-full"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
